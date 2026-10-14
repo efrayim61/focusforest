@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>focusforest</title>
 <meta name="color-scheme" content="light">
-<meta name="theme-color" content="#9db8bd">
+<meta name="theme-color" content="#a9c0bd">
 
 
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -525,6 +525,28 @@ body,.frame{background:#c4d5d1}
  .modal .sheet .row>div{min-width:0!important;flex:1!important;overflow-wrap:anywhere!important}
  .modal .sheet .sw-t{flex:0 0 56px!important}
 }
+
+/* iPhone v6: independent, viewport-anchored notification; stable scroll rendering */
+@media (max-width:760px){
+  html,body{overflow-x:clip!important}
+  #toast{position:fixed!important;left:50%!important;right:auto!important;top:auto!important;
+    bottom:calc(20px + env(safe-area-inset-bottom,0px))!important;
+    width:max-content!important;max-width:calc(100vw - 36px)!important;height:auto!important;
+    box-sizing:border-box!important;padding:14px 20px!important;margin:0!important;
+    font-size:clamp(20px,5.5vw,26px)!important;line-height:1.2!important;
+    white-space:normal!important;overflow-wrap:anywhere!important;text-align:center!important;
+    transform:translate3d(-50%,24px,0)!important;z-index:2147483001!important;
+    contain:layout style!important;isolation:isolate!important}
+  #toast.on{transform:translate3d(-50%,0,0)!important}
+  #toast::before{filter:none!important;border-radius:22px!important}
+  .scene{contain:strict!important;overflow:hidden!important;transform:none!important;backface-visibility:visible!important}
+  .scene svg{width:100%!important;height:100%!important}
+  .scene [filter]{filter:none!important}
+  .sw{animation:none!important}
+  .petals i{animation:none!important;display:none!important}
+  .brush::before,.dur::before,.paper::before,.toast::before,.btn-start::before,.btn-glass::before{filter:none!important}
+  .ring,.nav,.dur::before{will-change:auto!important}
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 
@@ -876,6 +898,7 @@ function buildScene(){
   o+=`<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${(r*2.1).toFixed(1)}" ry="${r.toFixed(1)}" fill="${i%3?'#ead3b7':'#b5c2b7'}" opacity="${(.18+R()*.3).toFixed(2)}"/>`}
  o+=`<rect width="1151" height="1367" fill="#eee1cd" filter="url(#pgPaper)" opacity=".72"/>`;
  document.getElementById('scene').innerHTML=o;
+ if(matchMedia('(max-width:760px)').matches){document.querySelectorAll('#scene [filter]').forEach(n=>n.removeAttribute('filter'));}
 }
 
 /* =========================================================
@@ -1089,7 +1112,7 @@ function setTab(t){
 
 /* ---------- toast + modal ---------- */
 let toastT;
-function toast(msg,bad){const el=$('#toast');el.textContent=msg;el.classList.toggle('bad',!!bad);el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('on'),4200)}
+function toast(msg,bad){const el=$('#toast');if(el.parentElement!==document.body)document.body.appendChild(el);el.textContent=msg;el.classList.toggle('bad',!!bad);el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('on'),4200)}
 function openModal(html){const modal=$('#modal');if(modal.parentElement!==document.body)document.body.appendChild(modal);$('#sheet').innerHTML=html;$('#modal').hidden=false;$('#sheet').querySelector('button')?.focus()}
 function closeModal(){$('#modal').hidden=true}
 function settingsModal(){
