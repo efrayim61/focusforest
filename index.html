@@ -413,6 +413,47 @@ body,.frame{background:#c4d5d1}
 .grain{opacity:.19;mix-blend-mode:multiply}
 .brush::before{background:linear-gradient(120deg,rgba(51,85,101,.62),rgba(104,94,123,.53),rgba(66,111,108,.60))!important;backdrop-filter:blur(10px)}
 .dur::before{background:linear-gradient(125deg,rgba(59,104,113,.68),rgba(128,104,132,.58),rgba(91,119,109,.66))!important;backdrop-filter:blur(7px)}
+
+/* Mobile layout repair v2: reset desktop absolute positioning inside cards. */
+@media (max-width:760px){
+ html,body{min-height:100%;height:auto;width:100%;overflow-x:clip}
+ body{display:block;padding:0}
+ .frame{width:100%;max-width:100%;min-height:100svh;height:auto;overflow:clip}
+ .stage{width:100%;min-width:0;display:flex;flex-direction:column;padding:calc(16px + env(safe-area-inset-top)) 14px calc(44px + env(safe-area-inset-bottom))}
+ .hdr,.view{min-width:0;width:100%}
+ .view{display:flex;flex-direction:column;align-items:stretch;gap:18px}
+ .view>.a{position:relative!important;left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;width:100%!important;height:auto!important;min-width:0}
+ .hdr>.a{left:auto!important;top:auto!important}
+ .fpanel{display:flex!important;flex-direction:column;align-items:stretch;gap:16px;padding:20px 16px!important;min-height:0!important}
+ .fpanel>.a{position:relative!important;left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;width:100%!important;height:auto!important;min-width:0!important}
+ .fpanel>.fp-title{display:flex;align-items:center;gap:10px;min-height:44px}
+ .fpanel>.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;font-size:clamp(15px,4vw,19px)}
+ .stats li{min-width:0;gap:8px;overflow-wrap:anywhere}
+ .fpanel>.fp-forest{aspect-ratio:700/410;max-width:100%;margin:0!important}
+ .fpanel>.btn-glass{width:max-content!important;max-width:100%!important;min-height:54px;padding:0 22px}
+ .cluster{flex:0 0 auto;max-width:390px!important;width:100%!important;margin:0 auto!important;aspect-ratio:530/650;height:auto!important}
+ .durs{display:flex!important;flex-direction:row;gap:8px}
+ .durs>.dur{min-width:0;flex:1 1 0}
+ .ctrl{display:flex;justify-content:center;min-height:92px;gap:32px}
+ .fv-scene{aspect-ratio:700/410;min-height:0}
+ .fv-ctrl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+ .fv-info,.fv-list{min-height:0!important}
+ .panel{width:100%;max-width:100%;overflow-wrap:break-word}
+ .tiles{display:flex;flex-wrap:wrap}
+ .nav{min-width:0;max-width:100%;width:100%!important}
+ .nav button{min-width:0;flex:1 1 0;padding:0 3px}
+ .logo-t{font-size:clamp(30px,9vw,40px)}
+ .scene,.grain{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+ .frame::before,.frame::after{position:fixed;pointer-events:none}
+}
+@media(max-width:390px){
+ .stage{padding-left:10px;padding-right:10px}
+ .nav button{font-size:clamp(15px,4.2vw,19px)}
+ .dur svg{width:clamp(43px,14vw,58px);height:clamp(43px,14vw,58px)}
+ .dur b{font-size:clamp(21px,6.5vw,28px)}
+ .dur span{font-size:clamp(12px,3.5vw,15px)}
+}
+
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#d9e5d5">
