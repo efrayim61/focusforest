@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>focusforest</title>
 <meta name="color-scheme" content="light">
-<meta name="theme-color" content="#c4d5d1">
+<meta name="theme-color" content="#8daec9">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -553,6 +553,21 @@ body{min-height:100vh;min-height:100dvh;background:transparent!important}
   .frame { z-index:1!important; background:transparent!important; }
   .stage { padding-top:calc(18px + env(safe-area-inset-top, 0px))!important;
            padding-bottom:calc(44px + env(safe-area-inset-bottom, 0px))!important; }
+}
+
+/* v23: iPhone standalone top safe-area treatment, retain v22 full-bleed scene. */
+@media (max-width:760px) {
+  html, body { background:#8daec9!important; }
+  body > #scene {
+    top:calc(-1 * env(safe-area-inset-top, 0px))!important;
+    bottom:auto!important;
+    height:calc(100dvh + env(safe-area-inset-top, 0px))!important;
+    min-height:100vh!important;
+  }
+  /* Increase only START; keep RESUME sizing and placement unchanged. */
+  #btnStart.center-start:not(.resume-start) {
+    font-size:clamp(46px, 14vw, 62px)!important;
+  }
 }
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
