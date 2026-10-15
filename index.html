@@ -569,6 +569,13 @@ body{min-height:100vh;min-height:100dvh;background:transparent!important}
     font-size:clamp(46px, 14vw, 62px)!important;
   }
 }
+/* v24: extend ONLY the painted background farther upward on iPhone. */
+@media (max-width:760px) {
+  body > #scene {
+    top:calc(-1 * (env(safe-area-inset-top, 0px) + 70px))!important;
+    height:calc(100dvh + env(safe-area-inset-top, 0px) + 70px)!important;
+  }
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="FocusForest">
