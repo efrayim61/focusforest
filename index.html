@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>focusforest</title>
 <meta name="color-scheme" content="light">
-<meta name="theme-color" content="#b6c8bf">
-<meta name="theme-color" content="#e9d5b5">
+<meta name="theme-color" content="#c4d5d1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -475,6 +474,46 @@ body,.frame{background:#c4d5d1}
  #btnStart.resume-start{top:-33px!important}
  #sheet{max-height:calc(100dvh - 28px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
 }
+
+
+/* v17: Bookman typeface for START only; keep RESUME and all other typography unchanged */
+#btnStart.center-start:not(.resume-start) #startTxt{font-family:"Bookman Old Style","Bookman", "URW Bookman",Georgia,serif!important;font-weight:600!important;font-style:normal!important}
+
+/* v16: slightly raise both START and RESUME, without altering other layout */
+@media(max-width:760px){#btnStart.center-start,#btnStart.resume-start{top:-48px!important}}
+
+/* v15: narrow, contained dialogs; consistent iPhone safe area; faster scrolling */
+html{background:#c4d5d1!important;overscroll-behavior-x:none}
+body{background:#c4d5d1!important;overflow-x:hidden!important}
+#modal{box-sizing:border-box!important;position:fixed!important;inset:0!important;width:100%!important;height:100%!important;height:100dvh!important;max-width:100vw!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:calc(env(safe-area-inset-top,0px) + 12px) 12px calc(env(safe-area-inset-bottom,0px) + 12px)!important;overflow-x:clip!important;overflow-y:auto!important;contain:layout style!important}
+#modal[hidden]{display:none!important}
+#sheet{box-sizing:border-box!important;display:block!important;flex:none!important;width:min(62vw,270px)!important;max-width:calc(100vw - 32px)!important;min-width:0!important;margin:auto!important;left:auto!important;right:auto!important;transform:none!important;max-height:calc(100dvh - 80px)!important;overflow-y:auto!important;overflow-x:clip!important;padding:18px 13px!important;font-size:15px!important;line-height:1.3!important;contain:layout style!important}
+#sheet::before{inset:0!important;filter:none!important;border:1px solid rgba(255,243,217,.72)!important;border-radius:20px!important;backdrop-filter:none!important;background:rgba(43,66,81,.94)!important}
+#sheet h3{font-size:clamp(23px,6.6vw,29px)!important;line-height:1.05!important;margin-bottom:14px!important}
+#sheet p,#sheet small{font-size:14px!important;line-height:1.35!important;overflow-wrap:anywhere!important}
+#sheet .row{padding:11px 0!important;gap:7px!important;align-items:center!important}
+#sheet .row>div{min-width:0!important;flex:1 1 auto!important;font-size:17px!important;line-height:1.15!important;overflow-wrap:anywhere!important}
+#sheet .row small{display:block!important;margin-top:6px!important}
+#sheet .sw-t{width:38px!important;height:24px!important;flex:0 0 38px!important}
+#sheet .sw-t::after{width:18px!important;height:18px!important;left:3px!important;top:3px!important}
+#sheet .sw-t[aria-checked="true"]::after{transform:translateX(14px)!important}
+#sheet .acts{display:flex!important;flex-direction:column!important;gap:8px!important;width:100%!important;margin-top:14px!important}
+#sheet .acts button{width:100%!important;max-width:100%!important;min-width:0!important;font-size:20px!important;line-height:1.1!important;padding:11px 7px!important;white-space:normal!important;overflow-wrap:anywhere!important}
+@media(max-width:760px){
+ body{padding:0!important}
+ .frame{overflow:visible!important;min-height:100svh!important;box-shadow:none!important}
+ .stage{padding-top:calc(env(safe-area-inset-top,0px) + 18px)!important}
+ .scene,.grain{position:absolute!important;inset:0!important;pointer-events:none!important}
+ .scene{height:100%!important;filter:none!important}
+ .grain{display:none!important}
+ .brush::before,.dur::before{backdrop-filter:none!important;filter:none!important}
+ .fp-forest svg,.fv-scene svg{filter:none!important}
+ .nav{backdrop-filter:none!important}
+ .modal{backdrop-filter:none!important}
+ .sw{animation:none!important}
+ .stage,.view,.fpanel{contain:style!important}
+}
+@media(prefers-reduced-motion:reduce){.petals i{animation:none!important}}
 
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
