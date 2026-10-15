@@ -476,6 +476,9 @@ body,.frame{background:#c4d5d1}
 }
 
 
+/* v19: START centered, uppercase, no play triangle; RESUME unchanged */
+#btnStart.center-start{justify-content:center!important;gap:0!important;text-align:center!important}
+#btnStart.center-start #startTxt{display:block;width:100%;text-align:center}
 /* v18: script typeface for START only; RESUME and other text unchanged */
 #btnStart.center-start:not(.resume-start) #startTxt{font-family:"Dancing Script","Brush Script MT",cursive!important;font-weight:600!important;font-style:normal!important}
 
@@ -575,7 +578,7 @@ body{background:#c4d5d1!important;overflow-x:hidden!important}
         <svg class="k island" viewBox="0 0 500 150" style="--x:20;--y:420;--w:500;--h:150" aria-hidden="true" id="islandSvg"></svg>
         <div class="k tree-box" id="treeBox" style="--x:75;--y:121;--w:310;--h:372"></div>
         <div class="k petals" id="petals" style="--x:60;--y:150;--w:340;--h:420"></div>
-        <button class="k btn-start" id="btnStart" style="--x:95;--y:215;--w:290;--h:100"><svg viewBox="0 0 24 24"><path d="M7 4.5l12 7.5-12 7.5z"/></svg><span id="startTxt">Start</span></button>
+        <button class="k btn-start" id="btnStart" style="--x:95;--y:215;--w:290;--h:100"><span id="startTxt">START</span></button>
       </div>
 
       <div class="a ctrl" style="--x:896;--y:735;--w:210;--h:116">
@@ -938,11 +941,11 @@ function updateTimerUI(){
   const frac=S.state==='idle'||S.state==='done'||S.state==='failed'?.95:Math.max(.003,rem/T*.95);
   $('#ringArc').setAttribute('stroke-dasharray',`${(C*frac).toFixed(1)} ${C.toFixed(1)}`);
   $('#tNum').textContent=fmt(S.state==='idle'||S.state==='done'||S.state==='failed'?T:rem);
-  let lbl='Ready to focus',st='Start',dis=false;
+  let lbl='Ready to focus',st='START',dis=false;
   if(S.state==='running'){lbl='';st='';dis=true}
   if(S.state==='paused'){lbl='Break · '+fmt(S.breakLeft).replace(/^0/,'');st='Resume'}
-  if(S.state==='done'){lbl='Tree planted';st='Start';dis=true}
-  if(S.state==='failed'){lbl='Tree withered';st='Start';dis=true}
+  if(S.state==='done'){lbl='Tree planted';st='START';dis=true}
+  if(S.state==='failed'){lbl='Tree withered';st='START';dis=true}
   $('#startTxt').textContent=st;$('#btnStart').disabled=dis;
   $('#ring').classList.toggle('active',S.state!=='idle');
   $('#btnStart').classList.toggle('center-start',S.state==='idle'||S.state==='paused');
