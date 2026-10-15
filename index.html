@@ -518,11 +518,25 @@ body{background:#c4d5d1!important;overflow-x:hidden!important}
 }
 @media(prefers-reduced-motion:reduce){.petals i{animation:none!important}}
 
+
+/* v20: full-bleed iOS standalone safe-area background.
+   Keep the original painted SVG, UI positions and interactions intact. */
+html{min-height:100%;background:#c4d5d1!important}
+body{min-height:100vh;min-height:100dvh;background:transparent!important}
+@media(max-width:760px){
+  html,body{margin:0!important;width:100%;overflow-x:clip}
+  body{padding:0!important;display:block!important}
+  .frame{position:relative!important;isolation:auto!important;overflow:visible!important;min-height:100vh!important;min-height:100dvh!important;background:transparent!important}
+  .scene{position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;z-index:0!important;pointer-events:none!important;filter:none!important;transform:none!important}
+  .frame::before,.frame::after{position:fixed!important;inset:0!important;pointer-events:none!important}
+  .stage{position:relative!important;z-index:3!important;padding-top:calc(env(safe-area-inset-top,0px) + 18px)!important;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 44px)!important}
+  #modal{position:fixed!important;z-index:9999!important}
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
-<meta name="theme-color" content="#d9e5d5">
+<meta name="theme-color" content="#c4d5d1">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="FocusForest">
 <link rel="apple-touch-icon" href="./icon-192.png">
 </head>
