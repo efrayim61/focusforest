@@ -234,7 +234,7 @@ svg{display:block}
   .scene,.grain{position:fixed}
   .stage{--u:.8px;position:relative;inset:auto;display:flex;flex-direction:column;gap:18px;padding:14px 14px 60px}
   .view{display:flex;flex-direction:column;gap:18px}
-  .hdr{display:grid;grid-template-columns:1fr auto auto;grid-template-areas:"logo set av" "nav nav nav";align-items:center;gap:10px 8px}
+  .hdr{display:grid;grid-template-columns:1fr auto;grid-template-areas:"empty set" "nav nav";align-items:center;gap:10px 8px}
   .a{position:static;width:auto;height:auto;left:auto;top:auto}
   .logo{grid-area:logo;position:relative!important;padding-bottom:8px}
   .logo-t{font-size:40px}.logo svg{width:28px;height:28px}
@@ -532,11 +532,30 @@ body{min-height:100vh;min-height:100dvh;background:transparent!important}
   .stage{position:relative!important;z-index:3!important;padding-top:calc(env(safe-area-inset-top,0px) + 18px)!important;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 44px)!important}
   #modal{position:fixed!important;z-index:9999!important}
 }
+/* v21: header only shows settings; remove empty logo and palette space */
+@media (max-width:760px){
+  .hdr{grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:"empty set" "nav nav"!important}
+  #btnSet{grid-area:set;justify-self:end}
+}
+
+/* v22: iOS standalone safe-area rendering.
+   A container-type element creates a containing block for fixed descendants;
+   move the painted scene to the document root on mobile so it can reach the viewport. */
+@media (max-width:760px) {
+  html { min-height:100%; background:#8daec9!important; }
+  body { min-height:100dvh; background:transparent!important; }
+  body > #scene {
+    position:fixed!important; inset:0!important; width:100%!important;
+    height:100vh!important; height:100dvh!important; z-index:0!important;
+    pointer-events:none!important; transform:none!important; filter:none!important;
+    display:block!important;
+  }
+  .frame { z-index:1!important; background:transparent!important; }
+  .stage { padding-top:calc(18px + env(safe-area-inset-top, 0px))!important;
+           padding-bottom:calc(44px + env(safe-area-inset-bottom, 0px))!important; }
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
-<meta name="theme-color" content="#c4d5d1">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="FocusForest">
 <link rel="apple-touch-icon" href="./icon-192.png">
 </head>
@@ -561,11 +580,6 @@ body{min-height:100vh;min-height:100dvh;background:transparent!important}
 
   <div class="stage" id="stage">
     <div class="hdr">
-      <div class="a logo" style="--x:50;--y:24;--w:260;--h:80">
-        <span class="logo-t">focusforest</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 9 11 4 20 4c0 9-5 15-13 15z"/><path d="M5 19c3-5 6-8 10-10"/></svg>
-        <i></i>
-      </div>
       
       <nav class="a nav brush" role="tablist" style="--x:315;--y:28;--w:535;--h:72">
         <button role="tab" data-tab="forest" aria-selected="false">My Forest</button>
@@ -573,7 +587,6 @@ body{min-height:100vh;min-height:100dvh;background:transparent!important}
         <button role="tab" data-tab="stats" aria-selected="false">Statistics</button>
       </nav>
       <button class="a ibtn" id="btnSet" aria-label="Settings" style="--x:994;--y:36;--w:56;--h:56"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.4 5.4l1.9 1.9M16.7 16.7l1.9 1.9M5.4 18.6l1.9-1.9M16.7 7.3l1.9-1.9"/></svg></button>
-      <div class="a avatar" style="--x:1062;--y:36;--w:52;--h:52" aria-hidden="true"></div>
     </div>
 
     <!-- ============ ODAKLAN ============ -->
@@ -1170,5 +1183,21 @@ renderMini();renderMiniStats();renderBig();renderForestTab();renderStatsTab();se
 if(bootMsg)setTimeout(()=>toast(bootMsg,true),600);
 </script>
 <script>if ("serviceWorker" in navigator && location.protocol.startsWith("http")) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.warn));</script>
+<script>
+(function(){
+  function placeBackground(){
+    const scene=document.getElementById('scene');
+    const frame=document.getElementById('frame');
+    if(!scene||!frame)return;
+    if(window.matchMedia('(max-width:760px)').matches){
+      if(scene.parentElement!==document.body)document.body.insertBefore(scene,frame);
+    } else if(scene.parentElement!==frame){
+      frame.insertBefore(scene,frame.firstChild);
+    }
+  }
+  placeBackground();
+  window.addEventListener('resize',placeBackground,{passive:true});
+})();
+</script>
 </body>
 </html>
